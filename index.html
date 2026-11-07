@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ResumeMatch | Resume Analyzer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head><body>
+<header class="topbar"><a class="brand" href="/">Resume<span>Match</span></a>
+<nav><a href="/">Analyzer</a><a href="/history">History</a></nav></header>
+<main class="container">
+<section class="hero"><p class="eyebrow">CAREER TOOL · SKILL MATCHING</p>
+<h1>Make your resume<br><span>match the opportunity.</span></h1>
+<p>Compare the skills in your resume with a job description and identify skills that may need attention.</p></section>
+<section class="panel"><h2>Analyze your resume</h2>
+<form method="POST" enctype="multipart/form-data">
+<label for="resume">Resume <small>(PDF or TXT, maximum 5 MB)</small></label>
+<input id="resume" type="file" name="resume" accept=".pdf,.txt" required>
+<label for="job_description">Job description</label>
+<textarea id="job_description" name="job_description" rows="8" placeholder="Paste the job description here..." required></textarea>
+<button type="submit">Analyze resume</button></form>
+{% if error %}<p class="alert">{{ error }}</p>{% endif %}</section>
+{% if result %}<section class="results">
+<div class="score-card"><p class="eyebrow">SKILL MATCH SCORE</p><div class="score">{{ result.score }}<span>%</span></div>
+<p>Based on detected keywords in the job description.</p></div>
+<div class="panel"><h2>Results</h2><h3>Skills detected in resume</h3>
+<div class="chips">{% for x in result.resume %}<span class="chip">{{ x }}</span>{% else %}<p>No listed skills detected.</p>{% endfor %}</div>
+<h3>Matched skills</h3><div class="chips">{% for x in result.matched %}<span class="chip good">{{ x }}</span>{% else %}<p>No matches detected.</p>{% endfor %}</div>
+<h3>Skills not detected in resume</h3><div class="chips">{% for x in result.missing %}<span class="chip missing">{{ x }}</span>{% else %}<p>All detected job skills were found.</p>{% endfor %}</div></div></section>{% endif %}
+<p class="disclaimer">Educational keyword-matching demo only. It does not use a trained AI model, guarantee ATS performance, or make hiring decisions. Never add skills you do not actually have.</p>
+</main><footer>ResumeMatch · Python · Flask · SQLite · HTML · CSS</footer></body></html>

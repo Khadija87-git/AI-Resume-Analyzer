@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis History</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><header class="topbar"><a class="brand" href="/">Resume<span>Match</span></a><nav><a href="/">Analyzer</a><a href="/history">History</a></nav></header>
+<main class="container"><section class="hero"><p class="eyebrow">SAVED RESULTS</p><h1>Analysis history</h1><p>Your latest 20 comparisons are stored in the local SQLite database.</p></section>
+<section class="panel">{% if rows %}<div class="table-wrap"><table><thead><tr><th>File</th><th>Score</th><th>Matched skills</th><th>Date</th></tr></thead><tbody>
+{% for row in rows %}<tr><td>{{ row.filename }}</td><td><strong>{{ row.score }}%</strong></td><td>{{ row.matched_skills or "—" }}</td><td>{{ row.created_at }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p>No analyses saved yet. <a href="/">Analyze your first resume</a>.</p>{% endif %}</section></main>
+<footer>ResumeMatch · Local demo history</footer></body></html>
